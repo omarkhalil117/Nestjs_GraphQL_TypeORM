@@ -13,3 +13,14 @@ type Car {
 type Query {
   cars: [Car!]!
 }
+
+type Mutation {
+  createCar(car: addCarDto!): Car!
+}
+
+input addCarDto {
+  model: String!
+  year: Int!
+  cc: Int!
+  color: String
+}

@@ -2,6 +2,7 @@ import { BadRequestException, Body, HttpException, Injectable } from '@nestjs/co
 import { Car } from './cars.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { addCarDto } from './dto/creatCarDto.dto';
 
 @Injectable()
 export class CarsService {
@@ -18,13 +19,10 @@ export class CarsService {
     return Promise.resolve([car]);
   }
 
-  addCar(car: Car): string {
+  addCar(car: addCarDto): Promise<Car> {
     try {
       const newCar = this.carRepository.create(car);
-
-      this.carRepository.save(newCar);
-      return 'Car added successfully!';
-
+      return this.carRepository.save(newCar);
     } catch (e) {
       throw new BadRequestException(e, 'Failed to add the car');
     }
