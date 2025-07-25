@@ -1,5 +1,5 @@
 import { Field, InputType, Int } from "@nestjs/graphql";
-import { IsAlpha, IsInt, IsNumber, MinLength } from "class-validator";
+import { IsAlpha, IsInt, MinLength } from "class-validator";
 
 @InputType()
 export class addCarDto {
@@ -19,5 +19,9 @@ export class addCarDto {
   @IsAlpha()
   @Field({ nullable: true })
   color: string
+
+  @IsInt()
+  @Field(type => Int)
+  ownerId: number
 
 }

@@ -2,21 +2,34 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Owner {
+  id: Int!
+  name: String!
+  cars: [Car!]
+}
+
 type Car {
   id: Int!
   model: String!
   cc: Int!
   year: Int!
   color: String
+  ownerId: Int
+  owner: Owner!
 }
 
 type Query {
   cars: [Car!]!
   getCar(id: Int!): Car!
+  owners: [Owner!]!
+  owner(id: Int!): Owner!
 }
 
 type Mutation {
   createCar(car: addCarDto!): Car!
+  createOwner(createOwnerInput: CreateOwnerInput!): Owner!
+  updateOwner(updateOwnerInput: UpdateOwnerInput!): Owner!
+  removeOwner(id: Int!): Owner!
 }
 
 input addCarDto {
@@ -24,4 +37,14 @@ input addCarDto {
   year: Int!
   cc: Int!
   color: String
+  ownerId: Int!
+}
+
+input CreateOwnerInput {
+  name: String!
+}
+
+input UpdateOwnerInput {
+  name: String
+  id: Int!
 }

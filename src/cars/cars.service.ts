@@ -3,11 +3,13 @@ import { Car } from './cars.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { addCarDto } from './dto/creatCarDto.dto';
+import { OwnersService } from 'src/owners/owners.service';
+import { Owner } from 'src/owners/entities/owner.entity';
 
 @Injectable()
 export class CarsService {
 
-  constructor(@InjectRepository(Car) private carRepository: Repository<Car>) { }
+  constructor(@InjectRepository(Car) private carRepository: Repository<Car>, private ownersService: OwnersService) { }
 
   //Graphql
   findAll(): Promise<Car[]> {
@@ -43,5 +45,9 @@ export class CarsService {
       throw new NotFoundException('Car not found !');
     }
 
+  }
+
+  getOwner(ownerId: number): Promise<Owner> {
+    return this.ownersService.findOne(ownerId);
   }
 }
