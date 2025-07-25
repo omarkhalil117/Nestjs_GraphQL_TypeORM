@@ -8,6 +8,7 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { CarController } from './car/car.controller';
+import { OwnersModule } from './owners/owners.module';
 
 @Module({
   imports: [
@@ -29,7 +30,8 @@ import { CarController } from './car/car.controller';
       synchronize: process.env.NODE_ENV !== 'production',
       autoLoadEntities: true,
     }),
-    CarsModule],
+    CarsModule,
+    OwnersModule],
   controllers: [AppController, CarController],
   providers: [AppService],
 })
