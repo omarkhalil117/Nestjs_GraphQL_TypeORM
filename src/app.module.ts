@@ -7,6 +7,7 @@ import { join } from 'path';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
+import { CarController } from './car/car.controller';
 
 @Module({
   imports: [
@@ -29,7 +30,7 @@ import { ConfigModule } from '@nestjs/config';
       autoLoadEntities: true,
     }),
     CarsModule],
-  controllers: [AppController],
+  controllers: [AppController, CarController],
   providers: [AppService],
 })
 export class AppModule { }

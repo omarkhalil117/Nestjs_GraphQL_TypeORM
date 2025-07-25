@@ -1,8 +1,14 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Body, HttpException, Injectable } from '@nestjs/common';
 import { Car } from './cars.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class CarsService {
+
+  constructor(@InjectRepository(Car) private carRepository: Repository<Car>) { }
+
+  //Graphql
   findAll(): Promise<Car[]> {
     const car = new Car();
     car.model = "Tesla";
@@ -10,5 +16,24 @@ export class CarsService {
     car.cc = 1600;
 
     return Promise.resolve([car]);
+  }
+
+  addCar(car: Car): string {
+    try {
+      const newCar = this.carRepository.create(car);
+
+      this.carRepository.save(newCar);
+      return 'Car added successfully!';
+
+    } catch (e) {
+      throw new BadRequestException(e, 'Failed to add the car');
+    }
+
+  }
+
+  async fetchCars(): Promise<Car[]> {
+    const cars = await this.carRepository.find();
+    return cars;
+
   }
 }
