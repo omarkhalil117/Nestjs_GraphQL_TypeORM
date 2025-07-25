@@ -12,6 +12,7 @@ type Car {
 
 type Query {
   cars: [Car!]!
+  getCar(id: Int!): Car!
 }
 
 type Mutation {

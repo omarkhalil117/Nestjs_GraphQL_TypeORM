@@ -1,4 +1,4 @@
-import { BadRequestException, Body, HttpException, Injectable } from '@nestjs/common';
+import { BadRequestException, Body, HttpException, Injectable, NotFoundException } from '@nestjs/common';
 import { Car } from './cars.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -32,6 +32,16 @@ export class CarsService {
   async fetchCars(): Promise<Car[]> {
     const cars = await this.carRepository.find();
     return cars;
+
+  }
+
+  async findOne(id: number): Promise<Car> {
+    try {
+      const car = await this.carRepository.findOneByOrFail({ id })
+      return car;
+    } catch (err) {
+      throw new NotFoundException('Car not found !');
+    }
 
   }
 }

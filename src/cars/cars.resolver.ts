@@ -1,4 +1,4 @@
-import { Resolver, Query, Args, Mutation } from '@nestjs/graphql';
+import { Resolver, Query, Args, Mutation, Int } from '@nestjs/graphql';
 import { CarsService } from './cars.service';
 import { Car } from './cars.entity';
 import { addCarDto } from './dto/creatCarDto.dto';
@@ -10,6 +10,11 @@ export class CarsResolver {
   @Query(returns => [Car])
   cars(): Promise<Car[]> {
     return this.carsService.fetchCars();
+  }
+
+  @Query(returns => Car)
+  getCar(@Args('id', { type: () => Int }) id: number) {
+    return this.carsService.findOne(id);
   }
 
   @Mutation(returns => Car)

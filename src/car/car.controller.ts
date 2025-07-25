@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { Car } from 'src/cars/cars.entity';
 import { CarsService } from 'src/cars/cars.service';
 import { addCarDto } from 'src/cars/dto/creatCarDto.dto';
@@ -16,6 +16,11 @@ export class CarController {
   @Get()
   getAll() {
     return this.carsService.fetchCars();
+  }
+
+  @Get(':id')
+  findOne(@Param('id') id: number) {
+    return this.carsService.findOne(id);
   }
 
 }
