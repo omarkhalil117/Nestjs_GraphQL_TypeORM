@@ -50,4 +50,8 @@ export class CarsService {
   getOwner(ownerId: number): Promise<Owner> {
     return this.ownersService.findOne(ownerId);
   }
+
+  getCarsOfOwner(ownerId: number): Promise<Car[]> {
+    return this.carRepository.find({ where: { ownerId } });
+  }
 }
